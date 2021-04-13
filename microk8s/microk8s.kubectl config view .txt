@@ -1,0 +1,38 @@
+microk8s.kubectl config view 
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: DATA+OMITTED
+    server: https://127.0.0.1:16443
+  name: microk8s-cluster
+contexts:
+- context:
+    cluster: microk8s-cluster
+    user: admin
+  name: microk8s
+current-context: microk8s
+kind: Config
+preferences: {}
+users:
+- name: admin
+  user:
+    token: REDACTED
+ubuntu@u20s:~$ microk8s.kubectl config view --raw
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURBVENDQWVtZ0F3SUJBZ0lKQUwvZ0F2YmxTc3hyTUEwR0NTcUdTSWIzRFFFQkN3VUFNQmN4RlRBVEJnTlYKQkFNTURERXdMakUxTWk0eE9ETXVNVEFlRncweU1UQTBNVEl3T1RRNE1ETmFGdzB6TVRBME1UQXdPVFE0TUROYQpNQmN4RlRBVEJnTlZCQU1NRERFd0xqRTFNaTR4T0RNdU1UQ0NBU0l3RFFZSktvWklodmNOQVFFQkJRQURnZ0VQCkFEQ0NBUW9DZ2dFQkFPRjY4M1c4SmQrNU9MNFgzQWxDR1pIbVBPZ3VHbmZBeHdwRWtiVVRtdWlubFl6Z3VrWXAKMlc4Z1c1bFhCWi9scDhuR05IY2l2MFAwU2I4WVVwSDFQalZpUUdLVE1tNWcwZXgyRzVJeEhmSjJUYlBHZnZ2YwpuUGNoM0k2VGNhWnczYTFrMStvdlNsZFpHUmJiU1Vyd3JVMVB3ZDUvbGpjTXZEenZLeUlxeTNBVkN2MFp3bVExClpoZStrWFhVekNiUFJCaGJ5dytYM1Y1eUtkMTRNbkdxK0dMaWNLRTFKd1pzQWhUNkRpRG1raVVySFNsMHhEejcKK21laXNyZllnSjdSMGVwVjJ6VWp3OHlJYW9SRnVVNUc0NjlvNmNzTnhFMzZRU3J0TTdrelRJMWl4NHlqMEZtcgp6akYrTk9mamx2VVhQODhjMVN5MkhYTWZIQ1FQTURpWjFTMENBd0VBQWFOUU1FNHdIUVlEVlIwT0JCWUVGTWtlCklzRDFGOVZvallpMmhPd0NvZUtrQkUzVk1COEdBMVVkSXdRWU1CYUFGTWtlSXNEMUY5Vm9qWWkyaE93Q29lS2sKQkUzVk1Bd0dBMVVkRXdRRk1BTUJBZjh3RFFZSktvWklodmNOQVFFTEJRQURnZ0VCQUVXWnlZRDJqZFFFd3pTWAoyYnNaclBkeVlpVm42NVM1UHVuaVBPMWdFdlQwUGxGcjRyc2ZjV3NBSnIyZ0lQU3NEWkE3d01UKzAvWWthLytzCldhMTllbnM5d3hNZldHUmRWOW5TRGhFbWM0ME8xejY1OGdFT0xXdGNkNGhiS2xYUkhBREVjeXp1aUFsQmlWc1UKVXhyd2FxVG0wbnhVMTFzcE85eGpPdEMvQmY3YVRKV3JwUE4wTWgzaVFnb3h4L2NDeDZhNWorODFiSTJweTllUApreEd6K2hmYmNORm9GZkwxZmNyY0JmaHVwTW5sbU92RUUvLytwbnRIYlluM2lqUS9Ebk93ZFcweUIyYVRvMzZsClErT1llVmlBRGc0eE9mMUlwdlN6anZacEVTTXBYWTdiNGFZdkg0RGZTQVJBbENrR21aWDQ3Uys4SUV1REZEQ3YKMGREMUlNQT0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
+    server: https://127.0.0.1:16443
+  name: microk8s-cluster
+contexts:
+- context:
+    cluster: microk8s-cluster
+    user: admin
+  name: microk8s
+current-context: microk8s
+kind: Config
+preferences: {}
+users:
+- name: admin
+  user:
+    token: dVk0NlNpUmEza09rd1lqQjBneTZiaitCR3pkZDhtdS9LU2dnelVRcXNiWT0K

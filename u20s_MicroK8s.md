@@ -107,7 +107,10 @@ microk8s kubectl get pods
 No resources found in default namespace.  
   
 microk8s kubectl create deployment nginx --image=nginx  
+  
 
+microk8s.kubectl config view --raw > $HOME/.kube/config  
+   
   
 
 microk8s inspect
