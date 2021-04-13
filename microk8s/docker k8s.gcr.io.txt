@@ -1,0 +1,31 @@
+https://hub.docker.com/r/mirrorgooglecontainers/pause-arm64/tags?page=1&ordering=last_updated
+
+然后，从 mirrorgooglecontainers 和 coredns 下载 docker 镜像，并重新打上 k8s.gcr.io 的相关 tag，并删除老的 tag
+
+# 下载镜像
+docker pull mirrorgooglecontainers/kube-apiserver-arm64:v1.15.2
+docker pull mirrorgooglecontainers/kube-controller-manager-arm64:v1.15.2
+docker pull mirrorgooglecontainers/kube-scheduler-arm64:v1.15.2
+docker pull mirrorgooglecontainers/kube-proxy-arm64:v1.15.2
+docker pull mirrorgooglecontainers/pause-arm64:3.1
+docker pull mirrorgooglecontainers/etcd-arm64:3.3.10
+## coredns 需要从 coredns 官方下载
+docker pull coredns/coredns:coredns-arm64
+
+# 打上 k8s.gcr.io 的 tag
+docker tag mirrorgooglecontainers/kube-apiserver-arm64:v1.15.2 k8s.gcr.io/kube-apiserver:v1.15.2
+docker tag mirrorgooglecontainers/kube-controller-manager-arm64:v1.15.2 k8s.gcr.io/kube-controller-manager:v1.15.2
+docker tag mirrorgooglecontainers/kube-scheduler-arm64:v1.15.2 k8s.gcr.io/kube-scheduler:v1.15.2
+docker tag mirrorgooglecontainers/kube-proxy-arm64:v1.15.2 k8s.gcr.io/kube-proxy:v1.15.2
+docker tag mirrorgooglecontainers/pause-arm64:3.1 k8s.gcr.io/pause:3.1
+docker tag mirrorgooglecontainers/etcd-arm64:3.3.10 k8s.gcr.io/etcd:3.3.10
+docker tag coredns/coredns:coredns-arm64 k8s.gcr.io/coredns:1.3.1
+
+# 删除 mirrorgooglecontainers 的相关 tag
+docker rmi mirrorgooglecontainers/kube-apiserver-arm64:v1.15.2
+docker rmi mirrorgooglecontainers/kube-controller-manager-arm64:v1.15.2
+docker rmi mirrorgooglecontainers/kube-scheduler-arm64:v1.15.2
+docker rmi mirrorgooglecontainers/kube-proxy-arm64:v1.15.2
+docker rmi mirrorgooglecontainers/pause-arm64:3.1
+docker rmi mirrorgooglecontainers/etcd-arm64:3.3.10
+docker rmi coredns/coredns:coredns-arm64
