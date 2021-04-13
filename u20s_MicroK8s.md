@@ -31,7 +31,9 @@ cd ~/
 
 microk8s ctr image import pause-arm64.tar   
    
-  
+
+https://hub.docker.com/layers/mirrorgooglecontainers/metrics-server-arm64
+
 k8s.gcr.io/metrics-server-arm64      v0.3.6   
 docker save k8s.gcr.io/metrics-server:3.1 > metrics-server.tar  
 同样解压改标  
@@ -83,6 +85,30 @@ sudo microk8s.status
 
 sudo microk8s.reset  
 microk8s status  
+  
+
+microk8s.kubectl get nodes  
+NAME   STATUS   ROLES    AGE   VERSION  
+u20s   Ready    <none>   21h   v1.20.5-34+057bda1e79d450   
+  
+microk8s kubectl get services  
+NAME         TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE  
+kubernetes   ClusterIP   10.152.183.1   <none>        443/TCP   4h26m  
+  
+microk8s kubectl get ns  
+NAME                 STATUS   AGE  
+kube-system          Active   21h  
+kube-public          Active   21h  
+kube-node-lease      Active   21h  
+default              Active   21h  
+container-registry   Active   167m  
+  
+microk8s kubectl get pods  
+No resources found in default namespace.  
+  
+microk8s kubectl create deployment nginx --image=nginx  
+
+  
 
 microk8s inspect
 
@@ -92,6 +118,10 @@ microk8s.kubectl proxy --accept-hosts=.\* --address=0.0.0.0
 
 $ token=$(microk8s.kubectl -n kube-system get secret | grep default-token | cut -d " " -f1)  
 $ microk8s.kubectl -n kube-system describe secret $token  
+
+
+检查pod状态
+kubectl describe pod  [podname]   -n kube-system 
 
 
 ## 问题
