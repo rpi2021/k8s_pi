@@ -1,12 +1,13 @@
 # u20s安装MicroK8s
 ubuntu-20.04.2-preinstalled-server-arm64+raspi  
 MicroK8s适合离线开发、原型开发和测试，尤其是运行VM作为小、便宜、可靠的k8s用于CI/CD。支持arm架构，也适合开发 IoT 应用，通过 MicroK8s 部署应用到小型Linux设备上。  
-1.20.5-arm  
-## 环境
+MicroK8s 1.20.5-arm64   
+## 环境设置
 ### pi
-sudo nano /boot/firmware/cmdline.txt cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory  
-  
-grep mem /proc/cgroups | awk '{ print $4 }'  
+sudo nano /boot/firmware/cmdline.txt  
+cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory    
+   
+grep mem /proc/cgroups | awk '{ print $4 }'   
 
 ###  先安装docker, 用于下载容器  
 
