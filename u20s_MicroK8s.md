@@ -9,7 +9,9 @@ cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory
 grep mem /proc/cgroups | awk '{ print $4 }'   
 
 ## 先安装docker, 用于下载容器；再导入  
-curl -sSL https://get.docker.com | sh   
+curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun  
+#curl -sSL https://get.docker.com | sh   
+#curl -sSL https://get.daocloud.io/docker | sh  
 sudo apt install docker-compose  
 sudo usermod -aG docker ubuntu  
 
