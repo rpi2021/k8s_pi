@@ -26,7 +26,7 @@ docker save k8s.gcr.io.pause > pause.tar
   
 tar xvf pause.tar    #容器标签错  
 rm pause.tar  
-  
+6cf7c80fe4444767f63116e6855bf8c90bddde8ef63d3a2dc9b86c74989a4eb5.json  
 修改amd64 为arm64；再打包  
 tar -cf ~/pause-arm64.tar *  
 cd ~/  
@@ -39,6 +39,8 @@ https://hub.docker.com/r/mirrorgooglecontainers/metrics-server-arm64
 k8s.gcr.io/metrics-server-arm64      v0.3.6   
 docker save k8s.gcr.io/metrics-server:3.1 > metrics-server.tar  
 同样解压改标  
+f9499facb1e8c3c907d82f50441b8da45115c4314a9c175c8b3797e489c1cf1e.json  
+
 microk8s ctr image import metrics-server-arm64.tar  
   
   
