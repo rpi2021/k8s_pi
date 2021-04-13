@@ -1,22 +1,21 @@
 # u20s安装MicroK8s
 ubuntu-20.04.2-preinstalled-server-arm64+raspi  
-MicroK8s适合离线开发、原型开发和测试，尤其是运行VM作为小、便宜、可靠的k8s用于CI/CD。支持arm架构，也适合开发 IoT 应用，通过 MicroK8s 部署应用到小型Linux设备上。  
-MicroK8s 1.20.5-arm64   
-## 环境设置
-### pi
+MicroK8s 1.20.5-arm64   适合离线开发、原型开发和测试，尤其是运行VM作为小、便宜、可靠的k8s用于CI/CD。支持arm架构，也适合开发 IoT 应用，通过 MicroK8s 部署应用到小型Linux设备上。  
+  
+## pi设置
 sudo nano /boot/firmware/cmdline.txt  
 cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory    
    
 grep mem /proc/cgroups | awk '{ print $4 }'   
 
-###  先安装docker, 用于下载容器  
+##  先安装docker, 用于下载容器  
 
      
   
   
-### 下载snap包，手动安装  1.20.5-arm
-microk8s_2097.snap   #180m  
-microk8s_core_10862.snap  #90M  
+## 下载snap包，手动安装  1.20.5-arm64
+microk8s_2097.snap                #180m  
+microk8s_core_10862.snap           #90m  
 
 手动安装这种方式缺少一个.assert文件， 需要额外加一个参数--dangerous，另外microk8s的这个镜像需要添加--classic(忘记时，会有提示) 
     
@@ -45,7 +44,7 @@ sudo chown -f -R $USER ~/snap
   
 #sudo snap remove microk8s --purge
 
-### microk8s
+## microk8s
 sudo microk8s enable dns dashboard storage  
 
 
