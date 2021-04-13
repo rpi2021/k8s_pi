@@ -123,7 +123,7 @@ $ token=$(microk8s.kubectl -n kube-system get secret | grep default-token | cut 
 $ microk8s.kubectl -n kube-system describe secret $token  
 
 
-检查pod状态
+检查pod状态  
 kubectl describe pod  [podname]   -n kube-system 
 
 
