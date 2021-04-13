@@ -133,9 +133,9 @@ NAME                                      READY   STATUS     RESTARTS   AGE
 calico-kube-controllers-847c8c99d-8shsv   0/1     Pending    0          20m
 calico-node-fmmrr                         0/1     Init:0/3   0          20m
 
-mkubectl describe pod calico-node-fmmrr -n kube-system
-......
-Events:
+mkubectl describe pod calico-node-fmmrr -n kube-system  
+......  
+Events:  
   Type     Reason                  Age                   From               Message
   ----     ------                  ----                  ----               -------
   Normal   Scheduled               20m                   default-scheduler  Successfully assigned kube-system/calico-node-fmmrr to irving-workstation
