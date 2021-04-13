@@ -8,10 +8,37 @@ cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory
    
 grep mem /proc/cgroups | awk '{ print $4 }'   
 
-##  先安装docker, 用于下载容器  
+## 先安装docker, 用于下载容器；再导入  
+curl -sSL https://get.docker.com | sh   
+sudo apt install docker-compose  
+sudo usermod -aG docker ubuntu  
 
-     
+docker pull mirrorgooglecontainers/pause-arm64:3.1  
+docker tag mirrorgooglecontainers/pause-arm64:3.1 k8s.gcr.io/pause:3.1  
+#删除 mirrorgooglecontainers 的相关 tag  
+docker rmi mirrorgooglecontainers/pause-arm64:3.1  
   
+mkdir pause_arm  
+cd pause_arm  
+docker save k8s.gcr.io.pause > pause.tar    
+  
+tar xvf pause.tar    #容器标签错  
+rm pause.tar  
+  
+修改amd64 为arm64；再打包  
+tar -cf ~/pause-arm64.tar *  
+cd ~/  
+
+microk8s ctr image import pause-arm64.tar   
+   
+  
+k8s.gcr.io/metrics-server-arm64      v0.3.6   
+docker save k8s.gcr.io/metrics-server:3.1 > metrics-server.tar  
+同样解压改标  
+microk8s ctr image import metrics-server-arm64.tar  
+  
+  
+microk8s ctr images list
   
 ## 下载snap包，手动安装  1.20.5-arm64
 microk8s_2097.snap                #180m  
@@ -65,3 +92,34 @@ microk8s.kubectl proxy --accept-hosts=.\* --address=0.0.0.0
 
 $ token=$(microk8s.kubectl -n kube-system get secret | grep default-token | cut -d " " -f1)  
 $ microk8s.kubectl -n kube-system describe secret $token  
+
+
+## 问题
+kubectl get pods -n kube-system
+NAME                                      READY   STATUS     RESTARTS   AGE
+calico-kube-controllers-847c8c99d-8shsv   0/1     Pending    0          20m
+calico-node-fmmrr                         0/1     Init:0/3   0          20m
+
+mkubectl describe pod calico-node-fmmrr -n kube-system
+......
+Events:
+  Type     Reason                  Age                   From               Message
+  ----     ------                  ----                  ----               -------
+  Normal   Scheduled               20m                   default-scheduler  Successfully assigned kube-system/calico-node-fmmrr to irving-workstation
+  Warning  FailedCreatePodSandBox  10m (x15 over 20m)    kubelet            Failed to create pod sandbox: rpc error: code = Unknown desc = failed to get sandbox image "k8s.gcr.io/pause:3.1": failed to pull image "k8s.gcr.io/pause:3.1": failed to pull and unpack image "k8s.gcr.io/pause:3.1": failed to resolve reference "k8s.gcr.io/pause:3.1": failed to do request: Head "https://k8s.gcr.io/v2/pause/manifests/3.1": dial tcp 108.177.125.82:443: i/o timeout
+  Warning  FailedCreatePodSandBox  66s (x13 over 9m38s)  kubelet            Failed to create pod sandbox: rpc error: code = Unknown desc = failed to get sandbox image "k8s.gcr.io/pause:3.1": failed to pull image "k8s.gcr.io/pause:3.1": failed to pull and unpack image "k8s.gcr.io/pause:3.1": failed to resolve reference "k8s.gcr.io/pause:3.1": failed to do request: Head "https://k8s.gcr.io/v2/pause/manifests/3.1": dial tcp 108.177.97.82:443: i/o timeout
+
+
+我们只需要从别的地方下载到所需要的镜像 (这里是 k8s.gcr.io/pause:3.1)，保证运行在我们机器上的 Pod 可以正常获取镜像就可以了。具体怎么解决可以参考其他文章，我个人使用的是阿里云镜像加速器。
+
+当你本地 Docker 镜像仓库中有了 k8s.gcr.io/pause:3.1 这个镜像之后，Pod 却仍然无法获取镜像，这是怎么回事？
+
+原来 Microk8s 使用的 CRE 是 containerd，我们需要再将 Docker 镜像仓库里的镜像放到 Microk8s 使用的镜像仓库里去：
+
+docker save k8s.gcr.io/pause:3.1 > pause.tar
+microk8s ctr image import pause.tar
+这下再看 pod 状态已经都正常了：
+
+NAME                                      READY   STATUS    RESTARTS   AGE
+calico-node-fmmrr                         1/1     Running   1          60m
+calico-kube-controllers-847c8c99d-8shsv   1/1     Running   0          60m
