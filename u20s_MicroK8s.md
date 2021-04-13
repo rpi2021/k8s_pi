@@ -32,7 +32,7 @@ cd ~/
 microk8s ctr image import pause-arm64.tar   
    
 
-https://hub.docker.com/layers/mirrorgooglecontainers/metrics-server-arm64
+https://hub.docker.com/r/mirrorgooglecontainers/metrics-server-arm64
 
 k8s.gcr.io/metrics-server-arm64      v0.3.6   
 docker save k8s.gcr.io/metrics-server:3.1 > metrics-server.tar  
